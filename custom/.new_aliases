@@ -34,7 +34,7 @@ alias gsf='git ls-files | grep'
 alias startnoobmode='mv ~/.nanorc ~/repos/.nanorc && echo noob mode initiated.'
 alias endnoobmode='mv ~/repos/.nanorc ~/.nanorc && echo noob mode terminated.'
 alias exitnoobmode='mv ~/repos/.nanorc ~/.nanorc && echo noob mode terminated.'
-alias cheatsheet='nano ~/.dotfiles/.noob_mode/.cheatsheet'
+alias cheatsheet='nano ~/.dottrines/noob_mode/.cheatsheet'
 
 # pokemon things
 # alias gtpp='gb -df tpp && gbn tpp && gsl'

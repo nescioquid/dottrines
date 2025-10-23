@@ -1,0 +1,168 @@
+# DOTTRINES_ALIASES
+
+# alias installdotfiles='_dotfiles_install'
+alias pushdotfiles='_dotfiles_push'
+# alias pulldotfiles='_dotfiles_pull'
+alias noobmode='_toggle_noob_mode'
+
+# ---
+
+# defines an array containing the list of dotfiles to be backed up
+dotfiles=(
+  .bashrc
+  .gitconfig
+  .nanorc
+  .zshrc
+)
+
+# defines an array containing the list of oh-my-zsh customizations to be backed up
+omzcustom=(
+  .oh-my-zsh/custom/
+)
+
+# installs configurations in a new environment
+# function _dotfiles_install() {
+#   for dotfile in "${dotfiles[@]}"; do
+#     cp -fr ~/.dottrines/"$dotfile" ~
+#   done
+#   echo configurations pulled, congrats!
+#   if [[ -n "$BASH_VERSION" ]]; then
+#     source ~/.bashrc
+#   elif [[ -n "$ZSH_VERSION" ]]; then
+#     source ~/.zshrc
+#   else
+#     echo 'unknown shell, no run commands sourced'
+#   fi
+#   _dotfiles_youdidthething
+#   cd ~
+# }
+
+# pushes configurations to github
+function _dotfiles_push() {
+  cd ~/.dottrines || return
+  echo "whoosh! heading over to:"
+  echo "~/.dottrines"
+
+  # copy simple dotfiles
+  for dotfile in "${dotfiles[@]}"; do
+    src="$HOME/$dotfile"
+    if [[ -e "$src" ]]; then
+      cp -fr "$src" ~/.dottrines/
+      echo "copied: $dotfile"
+    else
+      echo "skipped missing: $dotfile"
+    fi
+  done
+
+  # copy omzcustom paths (preserve structure)
+  for omzpath in "${omzcustom[@]}"; do
+    src="$HOME/$omzpath"
+    dest="$HOME/.dottrines/$omzpath"
+    if [[ -e "$src" ]]; then
+      mkdir -p "$(dirname "$dest")"
+      cp -a "$src" "$dest"
+      echo "copied structure: $omzpath"
+    else
+      echo "skipped missing: $omzpath"
+    fi
+  done
+
+  echo "starting to do git things:"
+  git add -v --all
+  git commit -v --message "updated on $(date +"%d %B %Y at %T")" || echo "nothing to commit"
+  git push
+  echo "done doing git things."
+  echo "configurations pushed, congrats!"
+  echo "now heading back to:"
+  cd - || true
+}
+
+# pulls configurations from github
+# function _dotfiles_pull() {
+#   cd ~/.dottrines
+#   echo whoosh! heading over to:
+#   echo ~/.dottrines
+#   echo starting to do git things:
+#   git pull
+#   echo done doing git things.
+#   for dotfile in "${dotfiles[@]}"; do
+#     cp -fr ~/.dottrines/"$dotfile" ~
+#   done
+#   echo configurations pulled, congrats!
+#   echo now heading back to:
+#   cd -
+# }
+
+function _dotfiles_youdidthething() {
+  echo '▀▄▀ ▄▀▄ █ █   █▀▄ █ █▀▄   ▀█▀ █▄█ ██▀   ▀█▀ █▄█ █ █▄ █ ▄▀  █'
+  echo ' █  ▀▄▀ ▀▄█   █▄▀ █ █▄▀    █  █ █ █▄▄    █  █ █ █ █ ▀█ ▀▄█ ▄'
+}
+
+function _toggle_noob_mode() {
+  local bashrc="$HOME/.bashrc"
+  local nanorc="$HOME/.nanorc"
+  local dottrines_nanorc="$HOME/.dottrines/.nanorc"
+
+  # Determine if noob mode is currently active (uncommented)
+  local is_noob_enabled
+  if grep -Eq '^[^#]*source.*noob_mode/.aliases' "$bashrc"; then
+    is_noob_enabled=true
+  else
+    is_noob_enabled=false
+  fi
+
+  case "$1" in
+    status)
+      if [ "$is_noob_enabled" = true ]; then
+        echo "Noob mode is currently ENABLED."
+        echo "Active configs: noob_mode/.cheatsheet, noob_mode/.aliases"
+      else
+        echo "Noob mode is currently DISABLED."
+        echo "Active configs: custom/.bash_aliases, custom/.aliases"
+      fi
+      [ -f "$nanorc" ] && echo ".nanorc is present" || echo ".nanorc is absent"
+      return
+      ;;
+  esac
+
+  if [ "$is_noob_enabled" = true ]; then
+    echo "Disabling noob mode..."
+    sed -i 's|^\(\s*\)#\?\s*source.*custom/.bash_aliases|\1source $HOME/.dottrines/custom/.bash_aliases|' "$bashrc"
+    sed -i 's|^\(\s*\)#\?\s*source.*custom/.aliases|\1source $HOME/.dottrines/custom/.aliases|' "$bashrc"
+    sed -i 's|^\(\s*\)#\?\s*source.*noob_mode/.cheatsheet|\1# source $HOME/.dottrines/noob_mode/.cheatsheet|' "$bashrc"
+    sed -i 's|^\(\s*\)#\?\s*source.*noob_mode/.aliases|\1# source $HOME/.dottrines/noob_mode/.aliases|' "$bashrc"
+
+    # Restore .nanorc
+    if [ -f "$dottrines_nanorc" ]; then
+      cp "$dottrines_nanorc" "$nanorc"
+      echo "Restored .nanorc from dottrines config."
+    else
+      echo "No .nanorc found in $dottrines_nanorc — skipping copy."
+    fi
+
+    echo "Noob mode disabled."
+  else
+    echo "Enabling noob mode..."
+    sed -i 's|^\(\s*\)#\?\s*source.*custom/.bash_aliases|\1# source $HOME/.dottrines/custom/.bash_aliases|' "$bashrc"
+    sed -i 's|^\(\s*\)#\?\s*source.*custom/.aliases|\1# source $HOME/.dottrines/custom/.aliases|' "$bashrc"
+    sed -i 's|^\(\s*\)#\?\s*#\?\s*source.*noob_mode/.cheatsheet|\1source $HOME/.dottrines/noob_mode/.cheatsheet|' "$bashrc"
+    sed -i 's|^\(\s*\)#\?\s*#\?\s*source.*noob_mode/.aliases|\1source $HOME/.dottrines/noob_mode/.aliases|' "$bashrc"
+
+    # Remove .nanorc for noob mode
+    if [ -f "$nanorc" ]; then
+      rm "$nanorc"
+      echo "Removed .nanorc (noob mode)."
+    fi
+
+    echo "Noob mode enabled."
+  fi
+
+  echo "Reloading .bashrc..."
+  # Run .bashrc in a subshell to test if it sources cleanly
+  if bash -c "source '$bashrc'" &>/dev/null; then
+    echo ".bashrc sourced successfully."
+    [ -n "$PS1" ] && source "$bashrc"
+  else
+    echo "Error: .bashrc did not source cleanly! Check for issues above."
+  fi
+}

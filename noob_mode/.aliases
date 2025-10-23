@@ -1,0 +1,25 @@
+# NOOB_MODE_ALIASES
+
+# The following are intended to override the corresponding noob mode aliases
+
+alias aliases='${EDITOR} ~/.dottrines/noob_mode/.aliases'
+alias naliases='nano ~/.dottrines/noob_mode/.aliases'
+alias vscaliases='code ~/.dottrines/noob_mode/.aliases'
+
+alias edit_cheatsheet='code ~/.dottrines/noob_mode/.cheatsheet'
+alias nano_cheatsheet='nano ~/.dottrines/noob_mode/.cheatsheet'
+alias vscode_cheatsheet='code ~/.dottrines/noob_mode/.cheatsheet'
+
+# ---
+
+source ~/.dottrines/custom/.dottrines_aliases
+source ~/.dottrines/custom/.new_aliases
+
+# ---
+
+alias poke='cd ~/repos/pokeemerald'
+
+# (re)adds poryscript executable
+alias addporyscript='cp -irv ~/repos/pokemon/poryscript/poryscript tools/poryscript/'
+alias addpory='cp -irv ~/repos/pokemon/poryscript/poryscript tools/poryscript/'
+alias addp='cp -irv ~/repos/pokemon/poryscript/poryscript tools/poryscript/'

@@ -1,23 +1,23 @@
 # ALIASES
 
 # uncomment the domain-specific aliases you want to use
-# source ~/.dotfiles/.ascii_aliases
-source ~/.dotfiles/.dotfiles_aliases
-source ~/.dotfiles/.git_aliases
-source ~/.dotfiles/.pokemon_aliases
-source ~/.dotfiles/.pop-os_aliases
-# source ~/.dotfiles/.windows_aliases
+# source $HOME/.dottrines/custom/.ascii_aliases
+source $HOME/.dottrines/custom/.dottrines_aliases
+source $HOME/.dottrines/custom/.git_aliases
 
-# source ~/.dotfiles/.noob_mode/.aliases
-# source $HOME/.dotfiles/.noob_mode/.cheatsheet
-# source ~/.dotfiles/.noob_mode/.git_aliases
-# source ~/.dotfiles/.noob_mode/.noob_mode_aliases
+source $HOME/.dottrines/custom/.linux_aliases
+# source $HOME/.dottrines/custom/.windows_aliases
+
+source $HOME/.dottrines/custom/.pokemon_aliases
+
+# source $HOME/.dottrines/noob_mode/.aliases
+# source $HOME/.dottrines/noob_mode/.cheatsheet
 
 # opens up alias files in the terminal editor
-alias aliases='aliases() { if [ $1 ]; then ${EDITOR} ~/.dotfiles/."$1"_aliases; else ${EDITOR} ~/.dotfiles/.aliases; fi }; aliases'
+alias aliases='aliases() { if [ $1 ]; then ${EDITOR} ~/.dottrines/custom/."$1"_aliases; else ${EDITOR} ~/.dottrines/custom/.aliases; fi }; aliases'
 
 # opens up alias files in vscode
-alias vscaliases='vscaliases() { if [ $1 ]; then code ~/.dotfiles/."$1"_aliases; else code ~/.dotfiles/.aliases; fi }; vscaliases'
+alias vscaliases='vscaliases() { if [ $1 ]; then code ~/.dottrines/custom/."$1"_aliases; else code ~/.dottrines/custom/.aliases; fi }; vscaliases'
 
 # opens up run command files in the terminal editor
 alias rc='rc() { ${EDITOR} ~/."$1"rc; }; rc'
@@ -31,11 +31,11 @@ alias repos='repos() { if [ $1 ]; then cd ~/repos/"$1"; else cd ~/repos; fi }; r
 # opens up a repo in vscode
 alias vscrepo='vscrepo() { code -n ~/repos/"$1"/ }; vscrepo'
 
-# brings you to the 'dotfiles' directory
-alias dotfiles='cd ~/.dotfiles/'
+# brings you to the 'dottrines' directory
+alias dottrines='cd ~/.dottrines/'
 
-# opens up the 'dotfiles' directory
-alias vscdotfiles='code -n ~/.dotfiles/'
+# opens up the 'dottrines' directory
+alias vscdottrines='code -n ~/.dottrines/'
 
 alias a='alias'
 alias an='alias'
@@ -112,9 +112,6 @@ alias look='look() { ls -1A --group-directories-first "$1"; echo ---; echo \(lis
 # toss things into the trash instead of hard deleting them
 alias toss='toss() { md ~/.local/share/Trash/files/tossed/; mv -ivt ~/.local/share/Trash/files/tossed/ "$1"; echo hey, you just tossed that \""$1"\" thing in the trash using the \*mv\* command. so stinky!; }; toss'
 
-# copies a ''.local_aliases' template to the correct location
-alias localizeit='cp -irv ~/.dotfiles/.local_aliases ~/.local/.local_aliases'
-
 # ---
 
 # from others
@@ -125,5 +122,4 @@ alias topcommands='topcommands() { history | awk '\''{cmd[$2]++} END {for(elem i
 # ---
 
 # more aliases you can use
-# source ~/.local/.local_aliases
-source ~/.dotfiles/.new_aliases
+source $HOME/.dottrines/custom/.new_aliases

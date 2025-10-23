@@ -167,5 +167,5 @@ eval "$(zoxide init --cmd j zsh)"
 eval "$(fzf --zsh)"
 
 # Adds my configurations
-source $HOME/.dotfiles/.zsh_aliases
-source $HOME/.dotfiles/.aliases
+source $HOME/.dottrines/custom/.zsh_aliases
+source $HOME/.dottrines/custom/.aliases

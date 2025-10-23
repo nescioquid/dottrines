@@ -126,22 +126,21 @@ else
   export EDITOR='nano'
 fi
 
-. "/home/drjw/.deno/env"
+# deno thinss
+# . "/home/drjw/.deno/env"
 
 # zoxide things
-eval "$(zoxide init --cmd j bash)"
+# eval "$(zoxide init --cmd j bash)"
 
 # fzf things
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 # Set up fzf key bindings and fuzzy completion
-eval "$(fzf --bash)"
+# eval "$(fzf --bash)"
 
 # Adds my configurations
-# source $HOME/.dotfiles/.bash_aliases
-# source $HOME/.dotfiles/.aliases
+source $HOME/.dottrines/custom/.bash_aliases
+source $HOME/.dottrines/custom/.aliases
 
 # Comment out configs above and uncomment these for noob mode
-source $HOME/.dotfiles/.noob_mode/.aliases
-source $HOME/.dotfiles/.noob_mode/.git_aliases
-source $HOME/.dotfiles/.noob_mode/.cheatsheet
-source $HOME/.dotfiles/.noob_mode/.noob_mode_aliases
+# source $HOME/.dottrines/noob_mode/.cheatsheet
+# source $HOME/.dottrines/noob_mode/.aliases
