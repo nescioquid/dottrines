@@ -1,9 +1,13 @@
 # DOTTRINES_ALIASES
 
 # alias installdotfiles='_dotfiles_install'
-alias pushdotfiles='_dotfiles_push'
+# alias pushdotfiles='_dotfiles_push'
+alias promulgatedots='_dotfiles_push'
+alias promuldot='_dotfiles_push'
 # alias pulldotfiles='_dotfiles_pull'
 alias noobmode='_toggle_noob_mode'
+
+alias reindottrinate='sh -c "$(curl -fsSL https://raw.githubusercontent.com/nescioquid/dottrines/main/tools/install.sh)"'
 
 # ---
 
@@ -39,42 +43,51 @@ omzcustom=(
 
 # pushes configurations to github
 function _dotfiles_push() {
-  cd ~/.dottrines || return
+  local repo="$HOME/.dottrines"
+  cd "$repo" || return
+
   echo "whoosh! heading over to:"
-  echo "~/.dottrines"
+  echo "$repo"
+  echo
 
   # copy simple dotfiles
   for dotfile in "${dotfiles[@]}"; do
-    src="$HOME/$dotfile"
+    local src="$HOME/$dotfile"
     if [[ -e "$src" ]]; then
-      cp -fr "$src" ~/.dottrines/
+      cp -fr "$src" "$repo/"
       echo "copied: $dotfile"
     else
       echo "skipped missing: $dotfile"
     fi
   done
 
-  # copy omzcustom paths (preserve structure)
+  # copy oh-my-zsh customizations (to non-hidden dir, no nested custom/)
   for omzpath in "${omzcustom[@]}"; do
-    src="$HOME/$omzpath"
-    dest="$HOME/.dottrines/$omzpath"
-    if [[ -e "$src" ]]; then
+    local src="$HOME/$omzpath"
+    local dest="$repo/${omzpath#.}"  # remove leading dot
+    if [[ -d "$src" ]]; then
+      mkdir -p "$dest"
+      cp -a "$src"/* "$dest"/
+      echo "mirrored: ${src#$HOME/} → ${dest#$repo/}"
+    elif [[ -e "$src" ]]; then
       mkdir -p "$(dirname "$dest")"
       cp -a "$src" "$dest"
-      echo "copied structure: $omzpath"
+      echo "copied single file: ${src#$HOME/} → ${dest#$repo/}"
     else
       echo "skipped missing: $omzpath"
     fi
   done
 
+  echo
   echo "starting to do git things:"
   git add -v --all
   git commit -v --message "updated on $(date +"%d %B %Y at %T")" || echo "nothing to commit"
   git push
   echo "done doing git things."
   echo "configurations pushed, congrats!"
+  echo
   echo "now heading back to:"
-  cd - || true
+  cd - >/dev/null || true
 }
 
 # pulls configurations from github
