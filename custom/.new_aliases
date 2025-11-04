@@ -18,6 +18,7 @@ alias maek='make'
 alias amke='make'
 alias amek='make'
 
+# git things
 # search files rename for gfg
 alias gsearch='git ls-files | grep'
 alias gfs='git ls-files | grep'
