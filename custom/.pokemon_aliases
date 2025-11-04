@@ -29,7 +29,7 @@ alias gloge='glog expansion'
 alias gswe='gsw expansion'
 
 # copies the gba file to a file for versioned roms
-alias publishit='publishit() { copy ~/repos/pokeemerald/pokeemerald.gba ~/repos/pokemon/gt-roms/gt-"$1".gba; }; publishit'
+alias publishit='publishit() { copy ~/repos/pokeemerald-expansion/pokeemerald.gba ~/repos/pokemon/gt-roms/gt-"$1".gba; }; publishit'
 
 # changes commit author to nescioquid
 # HEAD must be on the commit to be amended

@@ -18,10 +18,6 @@ alias maek='make'
 alias amke='make'
 alias amek='make'
 
-# experimenting with swapping default behaviors with temp commands
-# alias glt='glogtt'
-# alias gltt='glogt'
-
 # search files rename for gfg
 alias gsearch='git ls-files | grep'
 alias gfs='git ls-files | grep'
