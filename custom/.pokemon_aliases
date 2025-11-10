@@ -1,8 +1,15 @@
 # POKEMON_ALIASES
 
+# typo catching
+alias maek='make'
+alias amke='make'
+alias amek='make'
+
 # short forms
 alias gle='gloge'
 alias gse='gswe'
+alias pmv='porymove'
+# alias pmva='porymoveall'
 
 # ---
 
@@ -20,9 +27,8 @@ alias copyit='copy pokeemerald.sav ~/repos/pokemon/last-save/'
 # 'make' is overridden for speed reasons
 # the command to find the j# is 'nproc'
 alias make='make -j$(nproc)'
-# alias maake='make -j'
-alias makke='make clean && make -j$(nproc)'
-# alias maakke='make clean && make -j'
+alias makke='make tidy && make -j$(nproc)'
+alias makkke='make clean && make -j$(nproc)'
 
 # faster logging and switching for common branches
 alias gloge='glog expansion'
@@ -42,3 +48,74 @@ alias addp='cp -irv ~/repos/pokemon/poryscript/poryscript tools/poryscript/'
 
 # checks out a tagged release of expansion
 alias gcoe='gcoe() { git checkout expansion/"$1"; }; gcoe'
+
+
+# completely resets a poryscript map file to where it should go and reworks the git index
+alias porymove='porymove() {
+  local incpath="$1"
+  local mapdir="$(dirname "$incpath")"
+  local poryfile="${incpath%.inc}.pory"
+  local ignorepath="${mapdir#data/maps/}/$(basename "$incpath")"
+
+  # Add ignore rule relative to data/maps (avoid duplicates)
+  if ! grep -Fxq "$ignorepath" data/maps/.gitignore; then
+    echo "$ignorepath" >> data/maps/.gitignore
+    git add data/maps/.gitignore
+  fi
+
+  # Prepend scripts.inc wrapped in raw` ... `
+  if [[ -f "$incpath" ]]; then
+    {
+      echo "raw\`"
+      sed "s/\t/  /g" "$incpath"   # tabs → exactly 2 spaces
+      echo "\`"
+    } > "$poryfile"
+  fi
+
+  # Forget old files in Git
+  git rm --cached "$incpath" 2>/dev/null
+
+}; porymove'
+
+# # function used to refactor all of pory_scripts/maps/ to their respective directires in data/maps/
+# porymoveall() {
+# grep '^\.include "data/scripts/pory_scripts/maps/.*\.inc"$' data/scripts/pory_scripts.inc | \
+# sed -E 's#^\.include "data/scripts/pory_scripts/maps/(.*)\.inc"$#\1#' | \
+# while read -r map; do
+#     echo "Processing map: $map"
+
+#     mapdir="data/maps/$map"
+#     incfile="$mapdir/scripts.inc"
+#     porysrc="data/scripts/pory_scripts/maps/$map.pory"
+#     porydest="$mapdir/scripts.pory"
+
+#     # Add ignore rule safely
+#     grep -qxF "$map/scripts.inc" data/maps/.gitignore || echo "$map/scripts.inc" >> data/maps/.gitignore
+#     git add data/maps/.gitignore
+
+#     # Move .pory file
+#     mv "$porysrc" "$porydest"
+
+#     # Prepend scripts.inc
+#     if [[ -f "$incfile" ]]; then
+#       {
+#         echo "raw\`"
+#         cat "$incfile"
+#         echo "\`"
+#         echo ""
+#         cat "$porydest"
+#       } > "$porydest.tmp" && mv "$porydest.tmp" "$porydest"
+#     fi
+
+#     # Forget old files in Git
+#     git rm --cached "$porysrc" 2>/dev/null
+#     git rm --cached "$incfile" 2>/dev/null
+
+#     # Delete the file locally
+#     # rm -f "$incfile"
+
+#     # Remove the exact .include line
+#     sed -i "/^\.include \"data\/scripts\/pory_scripts\/maps\/$map\.inc\"$/d" data/scripts/pory_scripts.inc
+
+# done
+# }
