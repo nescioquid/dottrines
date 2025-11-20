@@ -16,6 +16,8 @@ alias astrodev='npm run dev'
 # alias momnp='mompn() vsc momnp()'
 
 # git things
+alias gwippsh='gwip && gpsh'
+
 # search files rename for gfg
 alias gsearch='git ls-files | grep'
 alias gfs='git ls-files | grep'

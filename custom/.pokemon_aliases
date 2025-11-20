@@ -13,6 +13,9 @@ alias pmv='porymove'
 
 # ---
 
+# opens the repo
+alias vscpokeemerald='code -r ~/repos/pokeemerald-expansion'
+
 # opens main notes file
 alias pokenotes='nano ~/repos/pokemon/notes/notes.md'
 alias vscpokenotes='code ~/repos/pokemon/notes/notes.md'
@@ -99,7 +102,7 @@ alias porymove='porymove() {
 #     # Prepend scripts.inc
 #     if [[ -f "$incfile" ]]; then
 #       {
-#         echo "raw\`"
+#         echo "raw \`"
 #         cat "$incfile"
 #         echo "\`"
 #         echo ""
