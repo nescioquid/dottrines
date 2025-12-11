@@ -6,3 +6,8 @@ alias downloads='cd ~/Downloads'
 
 # opens up a file explorer at the current directory
 alias explore='nautilus .'
+
+# toggles light and dark themes
+alias toggle_theme='~/.dottrines/tools/toggle_theme.sh'
+alias toggled='~/.dottrines/tools/toggle_theme.sh'
+

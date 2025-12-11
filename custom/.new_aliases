@@ -4,6 +4,18 @@
 alias giwp='gwip'
 alias gtmep='gtemp'
 
+# ---
+
+# cd things
+alias mcd='mcd() { md "$1" && cd "$1"; }; mcd'
+
+# svelte things
+alias svdev='npm run dev -- --open'
+
+# mdbook things
+alias mdbdev='source ~/.profile && cd ~/repos/pokeemerald-expansion/ && cd docs/ && mdbook serve'
+alias mdbclr='rm -vr ~/repos/pokeemerald-expansion/docs/book/'
+
 # windsurf things
 alias ws='windsurf'
 
