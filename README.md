@@ -37,13 +37,13 @@ Afterwards, just reload your shell and you're ready to go.
 
 <!-- _Don't forget to make this repo private again afterwards!_ -->
 
-### Else
+### Then what?
 
 <!-- Push to this repo with `pushdotfiles` and pull from it with `pulldotfiles`. That's it! Remember to run `pushdotfiles` whenever you make any configuration changes! -->
 
 Push to this repo with `promulgatedots` and pull from it with `reindottrinate`. That's it! Remember to run `promulgatedots` whenever you make any configuration changes!
 
-### Other useful commands
+### Other useful commands:
 
 Update **apt**:
 ```console
