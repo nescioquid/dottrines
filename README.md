@@ -43,7 +43,7 @@ Afterwards, just reload your shell and you're ready to go.
 
 Push to this repo with `promulgatedots` and pull from it with `reindottrinate`. That's it! Remember to run `promulgatedots` whenever you make any configuration changes!
 
-## Other relevant commands
+## Other relevant commands brah
 
 Update **apt**:
 ```console
