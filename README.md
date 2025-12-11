@@ -11,7 +11,7 @@ You're welcome, future me!
 <!-- 
 Then, run the following commands, _separately_ (testing with Ubuntu on WSL2 has routinely failed as a single command, for whatever reason). The first makes the right directory in the right location, clones this repo into it, and sources a `.dotfiles_aliases` file that contains the prerequisite commands:
 
-```shell
+```console
 mkdir ~/repos/ && cd ~/repos &&
 git clone https://github.com/nescioquid/dotfiles.git &&
 source ~/repos/dotfiles/.dotfiles/.dotfiles_aliases
@@ -19,7 +19,7 @@ source ~/repos/dotfiles/.dotfiles/.dotfiles_aliases
 
 While the second actually installs the configurations locally:
 
-```shell
+```console
 installdotfiles
 ```
 
@@ -29,7 +29,7 @@ Afterwards, you should run `aliases` to make sure you're `source`-ing whatever a
 <!-- Then, run the following command: -->
 Run the following command:
 
-```shell
+```console
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/nescioquid/dottrines/main/tools/install.sh)"
 ```
 
@@ -46,16 +46,16 @@ Push to this repo with `promulgatedots` and pull from it with `reindottrinate`. 
 ### Other useful commands
 
 Update **apt**:
-```shell
+```console
 sudo apt update && sudo apt upgrade -y
 ```
 
 Install **zsh**:
-```shell
+```console
 sudo apt install zsh -y
 ```
 
 Install **oh-my-zsh**:
-```shell
+```console
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
