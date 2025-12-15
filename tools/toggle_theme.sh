@@ -1,11 +1,16 @@
 #!/bin/bash
 
-current=$(gsettings get org.gnome.desktop.interface color-scheme)
+LIGHT_THEME="Pop"
+DARK_THEME="Pop-dark"
 
-if [[ "$current" == "'prefer-dark'" ]]; then
+current_theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
+
+if [[ "$current_theme" == "'$DARK_THEME'" ]]; then
+    gsettings set org.gnome.desktop.interface gtk-theme "$LIGHT_THEME"
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
-    echo "switched to light theme"
+    echo "Switched to LIGHT theme"
 else
+    gsettings set org.gnome.desktop.interface gtk-theme "$DARK_THEME"
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-    echo "switched to dark theme"
+    echo "Switched to DARK theme"
 fi
